@@ -18,7 +18,16 @@ setopt PROMPT_SUBST
 
 setopt autocd extendedglob nomatch
 unsetopt beep notify
-bindkey -e
+# bindkey -e
+
+# set vim keybindings
+bindkey -v
+export KEYTIMEOUT=1
+
+bindkey -v '^P' up-history
+bindkey -v '^N' down-history
+bindkey -v '^A' beginning-of-line
+# bindkey -v '^E' end-of-line
 
 # aliases
 alias ls='ls --color=auto'
@@ -29,12 +38,8 @@ alias venv='source ./venv/bin/activate'
 alias .git='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 zstyle :compinstall filename '$HOME/.zshrc'
+zstyle ':completion:*' menu select
 _comp_options+=(globdots)
-
-#bindkey -v
-#export KEYTIMEOUT=1
-
-#zstyle ':completion:*' menu select
 
 # function to auto activate or deactivate a virtual environment
 python_venv() {
@@ -81,5 +86,8 @@ RPROMPT='$(git_status)%F{3}%0~%f %F{5}%T%f'
 autoload -Uz compinit; compinit
 
 # plugins
+source /usr/share/zsh-z/zsh-z.plugin.zsh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+bindkey -v '^E' autosuggest-accept
