@@ -1,17 +1,8 @@
 call plug#begin('~/.vim/plugged')
 
 " python plygins
-"Plug 'dense-analysis/ale'
-"Plug 'davidhalter/jedi-vim'
 Plug 'jeetsukumaran/vim-pythonsense', { 'for': 'python' }
 "Plug 'nvie/vim-flake8'
-"Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
-
-" legacy
-"Plug 'sjbach/lusty'
-"Plug 'vds2212/vim-remotions'
-"Plug 'vim-scripts/ReplaceWithRegister'
-"Plug 'jpalardy/vim-slime'
 
 "shared plugins
 Plug 'Houl/repmo-vim'
@@ -40,14 +31,10 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'mfussenegger/nvim-lint'
-" Plug 'freddiehaddad/feline.nvim'
 Plug 'bekaboo/deadcolumn.nvim'
-"Plug 'nanozuki/tabby.nvim'
 Plug 'RRethy/vim-illuminate'
-" Plug 'nvimdev/hlsearch.nvim'
 
 Plug 'olimorris/onedarkpro.nvim'
-Plug 'maxmx03/fluoromachine.nvim'
 Plug 'zootedb0t/citruszest.nvim'
 Plug 'Everblush/nvim'
 endif
@@ -82,19 +69,6 @@ lua << EOF
         auto_install = true,
         highlight = { enable = true },
         indent = { enable = true },
-    }
-
-    -- config colorschemes
-    require('fluoromachine').setup {
-        glow = false,
-        theme = 'fluoromachine',
-        transparent = 'full',
-        overrides = {
-            ['@function'] = { italic = false },
-            ['@comment'] = { italic = false },
-            ['@parameter'] = { italic = false },
-            ['@type'] = { italic = false },
-            }
     }
 
     -- config lsp
@@ -248,14 +222,6 @@ nnoremap <C-H> <C-W><C-H>
 "noremap <silent> k gk
 "noremap <silent> j gj
 
-"nnoremap <Up> <gk>
-"nnoremap <Down> <gj>
-
-"noremap <Up> <NOP>
-"noremap <Down> <NOP>
-"noremap <Left> <NOP>
-"noremap <Right> <NOP>
-
 "set hybrid number line
 set nu rnu
 
@@ -293,21 +259,11 @@ if !has('nvim')
     "sneak show labels
     let g:sneak#label = 1
 
-    "change default fFtT to sneak behavior
-    " map f <Plug>Sneak_f
-    " map F <Plug>Sneak_F
-    " map t <Plug>Sneak_t
-    " map T <Plug>Sneak_T
-
     map  <expr> ; repmo#LastKey('<Plug>Sneak_;')|sunmap ;
     map  <expr> , repmo#LastRevKey('<Plug>Sneak_,')|sunmap ,
 
     map  <expr> s repmo#ZapKey('<Plug>Sneak_s')|ounmap s|sunmap s
     map  <expr> S repmo#ZapKey('<Plug>Sneak_S')|ounmap S|sunmap S
-    " map  <expr> f repmo#ZapKey('<Plug>Sneak_f')|sunmap f
-    " map  <expr> F repmo#ZapKey('<Plug>Sneak_F')|sunmap F
-    " map  <expr> t repmo#ZapKey('<Plug>Sneak_t')|sunmap t
-    " map  <expr> T repmo#ZapKey('<Plug>Sneak_T')|sunmap T
 else
     map <expr> ; repmo#LastKey(';')|sunmap ;
     map <expr> , repmo#LastRevKey(',')|sunmap ,
