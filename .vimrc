@@ -70,6 +70,8 @@ colorscheme onedark
 autocmd vimenter * hi! Normal ctermbg=NONE guibg=NONE 
 " autocmd vimenter * hi! LineNr ctermbg=NONE guibg=NONE
 
+" set syntax as custom pt for new buffers without syntax
+au BufNewFile,BufEnter * if &syntax == '' | set syntax=pt | endif
 " configs for nvim plugins
 if has('nvim')
 lua << EOF
@@ -180,7 +182,7 @@ lua << EOF
     vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
     vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
-    vim.cmd("colorscheme fluoromachine")
+    vim.cmd("colorscheme citruszest")
 EOF
 endif
 
