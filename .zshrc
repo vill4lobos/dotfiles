@@ -24,10 +24,10 @@ unsetopt beep notify
 bindkey -v
 export KEYTIMEOUT=1
 
-bindkey -v '^P' up-history
-bindkey -v '^N' down-history
-bindkey -v '^A' beginning-of-line
-# bindkey -v '^E' end-of-line
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
 
 # aliases
 alias ls='ls --color=auto'
@@ -90,4 +90,4 @@ source /usr/share/zsh-z/zsh-z.plugin.zsh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-bindkey -v '^E' autosuggest-accept
+bindkey -v '^ ' autosuggest-accept
