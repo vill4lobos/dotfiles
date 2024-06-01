@@ -1,19 +1,17 @@
 call plug#begin('~/.vim/plugged')
 
-" python plygins
-Plug 'jeetsukumaran/vim-pythonsense', { 'for': 'python' }
-"Plug 'nvie/vim-flake8'
-
 "shared plugins
-Plug 'Houl/repmo-vim'
 Plug 'tpope/vim-commentary'
-Plug 'unblevable/quick-scope'
-Plug 'michaeljsmith/vim-indent-object'
-Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
+Plug 'unblevable/quick-scope'
+" Plug 'michaeljsmith/vim-indent-object'
+" Plug 'airblade/vim-gitgutter'
 Plug 'romainl/vim-cool'
+Plug 'psliwka/vim-smoothie'
 
 if !has('nvim')
+Plug 'Houl/repmo-vim'
 Plug 'justinmk/vim-sneak'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -23,9 +21,10 @@ endif
 if has('nvim')
 Plug 'ggandor/leap.nvim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-vsnip'
@@ -33,17 +32,27 @@ Plug 'hrsh7th/vim-vsnip'
 Plug 'mfussenegger/nvim-lint'
 Plug 'bekaboo/deadcolumn.nvim'
 Plug 'RRethy/vim-illuminate'
+Plug 'lewis6991/gitsigns.nvim'
+Plug 'windwp/nvim-ts-autotag'
+" Plug 'folke/trouble.nvim'
+" Plug 'stevearc/oil.nvim'
+"Plug 'ray-x/lsp_signature.nvim'
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+" Plug 'nvim-telescope/telescope-file-browser.nvim'
+" Plug 'karb94/neoscroll.nvim'
 
 Plug 'olimorris/onedarkpro.nvim'
 Plug 'zootedb0t/citruszest.nvim'
+Plug 'scottmckendry/cyberdream.nvim'
 Plug 'Everblush/nvim'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 endif
 
 "colorschemes
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
 Plug 'bignimbus/pop-punk.vim'
-Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+" Plug 'catppuccin/vim', { 'as': 'catppuccin_vim' }
 Plug 'joshdick/onedark.vim'
 
 call plug#end()
