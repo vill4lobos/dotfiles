@@ -211,7 +211,7 @@ lua << EOF
     end
 
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    local servers = { 'pyright' }
+    local servers = { 'pyright', 'tsserver', 'html', 'cssls', 'emmet_language_server' }
     for _, lsp in ipairs(servers) do
       require('lspconfig')[lsp].setup {
         capabilities = capabilities
