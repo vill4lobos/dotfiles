@@ -271,23 +271,136 @@ lua << EOF
       end,
     })
 
+     vim.diagnostic.config {
+       virtual_text = false,
+       signs = true,
+       underline = false,
+     }
+
     -- config leap
     require('leap').create_default_mappings()
 
     -- config telescope
+    -- local fb_actions = require "telescope._extensions.file_browser.actions"
+
+    require('telescope').setup{
+      defaults = {
+        layout_strategy = 'vertical',
+        wrap_results = true,
+        layout_config = {
+          prompt_position = 'bottom',
+        },
+      },
+      pickers = {
+        diagnostics = {
+          theme = 'ivy',
+          initial_mode = 'normal',
+        },
+        -- buffers = {
+        --   theme = 'cursor',
+        -- },
+      },
+    }
+      -- extensions = {
+      --   file_browser = {
+      --     theme = "ivy",
+      --     initial_mode = 'normal',
+      --     hijack_netrw = true,
+      --     -- depth = 2,
+      --     mappings = {
+      --       ["n"] = {
+      --         ["h"] = fb_actions.goto_parent_dir,
+      --         ["l"] = fb_actions.open,
+      --       },
+      --     },
+      --   },
+      -- },
+
+    -- require("telescope").load_extension "file_browser"
+    -- vim.keymap.set("n", "<leader>fb", ":Telescope file_browser<CR>")
+
     local builtin = require('telescope.builtin')
     vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-    vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-    vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-    vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+    vim.keymap.set('n', '<leader>fo', builtin.oldfiles, {})
+    vim.keymap.set('n', '<leader>fh', "<cmd>lua require('telescope.builtin').find_files({search_dirs={'~'}})<cr>", {})
+    vim.keymap.set('n', '<leader>d', builtin.diagnostics, {})
+    vim.keymap.set('n', '<leader>gr', builtin.live_grep, {})
+    vim.keymap.set('n', '<leader>bb', builtin.buffers, {})
+    vim.keymap.set('n', '<leader>s', builtin.lsp_document_symbols, {})
+    vim.keymap.set('n', '<leader>r', builtin.lsp_references, {})
 
-    vim.cmd("colorscheme citruszest")
+    -- config gitsigns
+    require('gitsigns').setup({
+
+      on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
+
+        local function map(mode, l, r, opts)
+          opts = opts or {}
+          opts.buffer = bufnr
+          vim.keymap.set(mode, l, r, opts)
+        end
+
+        -- Navigation
+        map('n', ']c', function()
+          if vim.wo.diff then return ']c' end
+          vim.schedule(function() gs.next_hunk() end)
+          return '<Ignore>'
+        end, {expr=true})
+
+        map('n', '[c', function()
+          if vim.wo.diff then return '[c' end
+          vim.schedule(function() gs.prev_hunk() end)
+          return '<Ignore>'
+        end, {expr=true})
+
+        -- Actions
+        map('n', '<leader>hs', gs.stage_hunk)
+        map('n', '<leader>hr', gs.reset_hunk)
+        map('n', '<leader>hu', gs.undo_stage_hunk)
+        map('n', '<leader>hp', gs.preview_hunk)
+        map('v', '<leader>hs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+        map('v', '<leader>hr', function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+        map('n', '<leader>hS', gs.stage_buffer)
+        map('n', '<leader>hR', gs.reset_buffer)
+      end
+    })
+
+    -- config oil
+    -- require("oil").setup()
+
+    -- config neoscroll
+    -- require('neoscroll').setup()
+
+    -- config colorscheme
+    -- require("catppuccin").setup({
+    --     transparent_background = true,
+    --     no_italic = true
+    -- })
+    
+    -- config lsp_signature
+    -- require("lsp_signature").setup()
+    require("cyberdream").setup({
+        transparent = true,
+        italic_comments = false,
+        hide_fillchars = true,
+        borderless_telescope = false,
+        terminal_colors = true
+    })
+
+    vim.cmd("colorscheme cyberdream")
+
+
+    vim.api.nvim_set_hl(0, "Normal", {guibg=NONE, ctermbg=NONE})
 EOF
 endif
 
+" supress colorscheme bg color for terminal transparency
+" autocmd VimEnter,SourcePost * highlight Normal ctermbg=NONE guibg=NONE 
+highlight Normal ctermbg=NONE guibg=NONE 
+
 " configs for shared plugins
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-
 
 set mouse=a
 set scrolloff=3
