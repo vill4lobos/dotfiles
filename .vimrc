@@ -265,25 +265,15 @@ augroup END
 
 set autochdir "change the directory to the directory of the opened file
 
-
-"split navigations
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-"noremap <silent> k gk
-"noremap <silent> j gj
-
 "set hybrid number line
 set nu rnu
 
 " rules to change number line according to mode
-:augroup numbertoggle
-:  autocmd!
-:  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
-:  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
-:augroup END
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
+  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+augroup END
 
 set clipboard=unnamedplus
 
@@ -296,28 +286,23 @@ au BufRead,BufNewFile *.py set filetype=python
 "newline without entering insert mode
 nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
+nnoremap Y y$
 
-"map motions to repmo (it's necessary to supress map in plugin of origin)
-map <expr> ]m repmo#Key('<plug>(PythonsenseStartOfNextPythonFunction)', '<plug>(PythonsenseStartOfPythonFunction)')|sunmap ]m
-map <expr> [m repmo#Key('<plug>(PythonsenseStartOfPythonFunction)', '<plug>(PythonsenseStartOfNextPythonFunction)')|sunmap [m
-map <expr> ]b repmo#Key(':bn<CR>', ':bp<CR>')|sunmap ]b
-map <expr> [b repmo#Key(':bp<CR>', ':bn<CR>')|sunmap [b
+nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <leader>pv :Ex<CR>
 
-map <expr> f repmo#ZapKey('<Plug>(QuickScopef)')|sunmap f
-map <expr> F repmo#ZapKey('<Plug>(QuickScopeF)')|sunmap F
-map <expr> t repmo#ZapKey('<Plug>(QuickScopet)')|sunmap t
-map <expr> T repmo#ZapKey('<Plug>(QuickScopeT)')|sunmap T
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
-if !has('nvim')
-    "sneak show labels
-    let g:sneak#label = 1
+nnoremap gb <C-^>
+" nnoremap <leader>b :bn<CR>
+nnoremap <leader>d :bd<CR>
 
-    map  <expr> ; repmo#LastKey('<Plug>Sneak_;')|sunmap ;
-    map  <expr> , repmo#LastRevKey('<Plug>Sneak_,')|sunmap ,
+nnoremap [b :bp<cr>
+nnoremap ]b :bn<cr>
 
-    map  <expr> s repmo#ZapKey('<Plug>Sneak_s')|ounmap s|sunmap s
-    map  <expr> S repmo#ZapKey('<Plug>Sneak_S')|ounmap S|sunmap S
-else
-    map <expr> ; repmo#LastKey(';')|sunmap ;
-    map <expr> , repmo#LastRevKey(',')|sunmap ,
-endif
+"noremap <silent> k gk
+"noremap <silent> j gj
