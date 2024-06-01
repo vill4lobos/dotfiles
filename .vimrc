@@ -53,26 +53,151 @@ set termguicolors "enable full palette of colors
 syntax on "syntax processing, colors
 colorscheme onedark
 
-" supress colorscheme bg color for terminal transparency
-autocmd vimenter * hi! Normal ctermbg=NONE guibg=NONE 
-" autocmd vimenter * hi! LineNr ctermbg=NONE guibg=NONE
 
 " set syntax as custom pt for new buffers without syntax
-au BufNewFile,BufEnter * if &syntax == '' | set syntax=pt | endif
+"au BufNewFile * if &syntax == '' | set syntax=pt | endif
+
 " configs for nvim plugins
 if has('nvim')
 lua << EOF
     -- config treesitter
     require "nvim-treesitter.configs".setup {
-        ensure_installed = { "c", "lua", "vim" , "python" },
+        ensure_installed = { "c", "lua", "vim" , "python", "javascript",
+                            "bash", "markdown", "tsx", "json", "html", "css" },
         sync_install = true,
         auto_install = true,
+        event = { "BufReadPre", "BufNewFile" },
         highlight = { enable = true },
         indent = { enable = true },
+        dependencies = { "nvim-treesitter/nvim-treesitter-textobjects", },
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = "<leader>e",
+            node_incremental = "<leader>e",
+            scope_incremental = false,
+            node_decremental = "<leader>r",
+          },
+        },
+    
     }
 
+    -- config treesitter textobjects
+    require'nvim-treesitter.configs'.setup {
+      textobjects = {
+        select = {
+          enable = true,
+          lookahead = true,
+          keymaps = {
+            ["am"] = { query = "@function.outer", desc = "Select outer part of a method/function definition" },
+            ["im"] = { query = "@function.inner", desc = "Select inner part of a method/function definition" },
+
+            ["ac"] = { query = "@class.outer", desc = "Select outer part of a class" },
+            ["ic"] = { query = "@class.inner", desc = "Select inner part of a class" },
+
+            ["ai"] = { query = "@conditional.outer", desc = "Select outer part of a conditional" },
+            ["ii"] = { query = "@conditional.inner", desc = "Select inner part of a conditional" },
+
+            ["al"] = { query = "@loop.outer", desc = "Select outer part of a loop" },
+            ["il"] = { query = "@loop.inner", desc = "Select inner part of a loop" },
+
+            ["af"] = { query = "@call.outer", desc = "Select outer part of a function call" },
+            ["if"] = { query = "@call.inner", desc = "Select inner part of a function call" },
+            }
+          },
+        move = {
+          enable = true,
+          set_jumps = true,
+          goto_next_start = {
+            ["]m"] = "@function.outer",
+            ["]]"] = { query = "@class.outer", desc = "Next class start" },
+          },
+          goto_next_end = {
+            ["]M"] = "@function.outer",
+            ["]["] = "@class.outer",
+          },
+          goto_previous_start = {
+            ["[m"] = "@function.outer",
+            ["[["] = "@class.outer",
+          },
+          goto_previous_end = {
+            ["[M"] = "@function.outer",
+            ["[]"] = "@class.outer",
+          },
+        },
+        swap = {
+          enable = true,
+          swap_next = {
+            ["<leader>na"] = "@parameter.inner",
+          },
+          swap_previous = {
+            ["<leader>pa"] = "@parameter.inner",
+          },
+        },
+      },
+    }
+
+    local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+    
+    vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+    vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+    
+    vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
+    vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
+    vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
+    vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
+
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+
     -- config lsp
-    require'lspconfig'.pyright.setup{}
+    --require'lspconfig'.pyright.setup{}
+    --require'lspconfig'.tsserver.setup{}
+    -- require'lspconfig'.emmet_language_server.setup{}
+ --   require'lspconfig'.cssls.setup {
+ --       capabilities = capabilites,
+ --       init_options = {
+ -- provideFormatter = false
+ --   }
+ --       }
+ --   require'lspconfig'.html.setup {
+ --       capabilities = capabilites,
+ --     init_options = {
+ --       configurationSection = { "html", "css", "javascript" },
+ --       embeddedLanguages = {
+ --         css = true,
+ --         javascript = true,
+ --       },
+ --       provideFormatter = false,
+ --     },
+ --   }
+    
+
+    vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+    vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+    -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+    vim.api.nvim_create_autocmd('LspAttach', {
+
+        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+        callback = function(ev)
+
+        local opts = { buffer = ev.buf }
+        -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+        vim.keymap.set('n', 'gh', vim.lsp.buf.hover, opts)
+        -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+        vim.keymap.set({ 'n', 'i' }, '<C-k>', vim.lsp.buf.signature_help, opts)
+
+        -- vim.keymap.set('n', '<space>d', vim.lsp.buf.type_definition, opts)
+        -- vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+        -- vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+        -- >> vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+        -- vim.keymap.set('n', '<space>f', function()
+        --     vim.lsp.buf.format { async = true }
+        -- end, opts)
+      end,
+    })
     
     -- config cmp
     local has_words_before = function()
