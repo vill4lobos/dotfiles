@@ -190,25 +190,78 @@ set incsearch 		"search as characters are entered
 set hlsearch		"highlight searches
 set ignorecase       "ignore case if search is all lowercase
 
-nnoremap <leader><space> :nohlsearch<CR>
-nnoremap <leader>pv :Ex<CR>
+set noshowmode      "dont shwo mode changes below statusline
+set nojoinspaces    "dont join spaces
 
-"layout
-set laststatus=2
-"statusline
-set statusline=                 "init
-set statusline+=\ %(%l-%L%)     "line number and line total
-set statusline+=\ <<\ %f\ >>   "file name
-"set statusline+=\ %t
-"set statusline+=\ /%{Wd()}/
-"set statusline+=\ %{getcwd()}
-set statusline+=\ %y
-set statusline+=%(%m%r%w%)   "file type
-set statusline+=[%n]
-set statusline+=%=              "right align
-"set statusline+=%-5.{strftime('%a\ %I:%M\ %p')}
-set statusline+=%-7{strftime('%I:%M')}
-set statusline+=%-4(%l,%c%V%)\ %P "set character and column number and percentage
+hi StatusLine ctermbg=NONE guibg=NONE
+
+function! StatusMode() abort
+  let l:modes={
+         \ 'n'  : 'normal',
+         \ 'v'  : 'visual',
+         \ 'V'  : 'vi-lin',
+         \ "\<C-V>" : 'vi-blk',
+         \ 'i'  : 'insert',
+         \ 'R'  : 'rplace',
+         \ 'Rv' : 'vi-rpl',
+         \ 'c'  : 'cmmand',
+         \}
+
+  return l:modes[mode()]
+endfunction
+
+function! GitBranch() abort
+  let l:is_branch = system("git rev-parse --abbrev-ref HEAD")
+  if l:is_branch !~ 'fatal'
+    return trim(l:is_branch)
+  else
+    return ''
+  endif
+endfunction
+
+" component for active window
+function! StatuslineActive()
+    let w:mode = '%#Type#%{StatusMode()}%*'
+    let l:buffer = ' %n |'
+    let l:branch = " %#Comment#%{GitBranch()}%*"
+    let l:filename = ' %#Function#%f%*'
+    let l:modified = ' %#Error#%M%*'
+    return w:mode.l:buffer.l:branch.l:filename.l:modified
+endfunction
+
+" component for inactive window
+function! StatuslineInactive()
+    let l:buffer = '%n |'
+    let l:filename = ' %f'
+    let l:modified = ' %M'
+    return 'inactv '.l:buffer.l:filename.l:modified
+endfunction
+
+function! StatuslineDefault()
+  let l:sep = '%='
+  let l:ftro = '%y%r '
+  let l:context = '%-4(%l-%L,%c%)'
+  return l:sep.l:ftro.l:context
+endfunction
+
+" load statusline using `autocmd` event with this function
+function! StatuslineLoad(mode)
+
+  if a:mode ==# 'active'
+    setlocal statusline=%!StatuslineActive().StatuslineDefault()
+  else
+    setlocal statusline=%!StatuslineInactive().StatuslineDefault()
+  endif
+
+  "l:sep..l:ftro.l:context
+endfunction
+
+augroup statusline_startup
+  autocmd!
+  autocmd BufEnter,FocusGained,WinEnter * call StatuslineLoad('active')
+  autocmd BufEnter,FocusGained,WinEnter * call GitBranch()
+  autocmd BufLeave,FocusLost,WinLeave * call StatuslineLoad('inactive')
+augroup END
 
 set autochdir "change the directory to the directory of the opened file
 
