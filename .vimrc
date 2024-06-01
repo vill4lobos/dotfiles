@@ -176,7 +176,9 @@ set autoindent
 
 "set cursorline		"line the cursor are on goes highlighted
 set wildmenu 		"when tab to complete, appears a zsh-like menu
-set wildmode=list:longest,full
+set wildmode=full:lastused
+" set wildmode=list:longest,full
+set wildoptions=pum
 set wildignore=__pycache__
 set showmatch		"highlight matching [{()}]
 
