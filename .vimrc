@@ -145,43 +145,11 @@ lua << EOF
         },
       },
     }
-
-    local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
     
-    vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
-    vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
-    
-    vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
-    vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
-    vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
-    vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
-
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
 
     -- config lsp
-    --require'lspconfig'.pyright.setup{}
-    --require'lspconfig'.tsserver.setup{}
-    -- require'lspconfig'.emmet_language_server.setup{}
- --   require'lspconfig'.cssls.setup {
- --       capabilities = capabilites,
- --       init_options = {
- -- provideFormatter = false
- --   }
- --       }
- --   require'lspconfig'.html.setup {
- --       capabilities = capabilites,
- --     init_options = {
- --       configurationSection = { "html", "css", "javascript" },
- --       embeddedLanguages = {
- --         css = true,
- --         javascript = true,
- --       },
- --       provideFormatter = false,
- --     },
- --   }
-    
-
     vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
     vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
     vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
@@ -192,16 +160,11 @@ lua << EOF
         callback = function(ev)
 
         local opts = { buffer = ev.buf }
-        -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
         vim.keymap.set('n', 'gh', vim.lsp.buf.hover, opts)
-        -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
         vim.keymap.set({ 'n', 'i' }, '<C-k>', vim.lsp.buf.signature_help, opts)
-
-        -- vim.keymap.set('n', '<space>d', vim.lsp.buf.type_definition, opts)
-        -- vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-        -- vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-        -- >> vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
         -- vim.keymap.set('n', '<space>f', function()
         --     vim.lsp.buf.format { async = true }
         -- end, opts)
@@ -236,8 +199,6 @@ lua << EOF
             end,
         },
         mapping = cmp.mapping.preset.insert({
-            ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-            ['<C-f>'] = cmp.mapping.scroll_docs(4),
             ['<C-Space>'] = cmp.mapping.complete(),
             ['<C-e>'] = cmp.mapping.abort(),
             ['<CR>'] = cmp.mapping.confirm({ select = true }),
@@ -266,10 +227,12 @@ lua << EOF
             { name = 'vsnip' },
         }, {
             { name = 'buffer' },
+        }, {
+            { name = 'nvim_lsp_signature_help' }
         })
     })
 
-    --config linter
+    -- config linter
     require('lint').linters_by_ft = {
         python = {'pylint',}
     }
@@ -309,24 +272,16 @@ lua << EOF
         --   theme = 'cursor',
         -- },
       },
+      extensions = {
+        fzf = {
+          fuzzy = true,
+          override_generic_sorter = true,
+          override_file_sorter = true,
+          case_mode = "smart_case",
+        },
+      }
     }
-      -- extensions = {
-      --   file_browser = {
-      --     theme = "ivy",
-      --     initial_mode = 'normal',
-      --     hijack_netrw = true,
-      --     -- depth = 2,
-      --     mappings = {
-      --       ["n"] = {
-      --         ["h"] = fb_actions.goto_parent_dir,
-      --         ["l"] = fb_actions.open,
-      --       },
-      --     },
-      --   },
-      -- },
-
-    -- require("telescope").load_extension "file_browser"
-    -- vim.keymap.set("n", "<leader>fb", ":Telescope file_browser<CR>")
+    require("telescope").load_extension('fzf')
 
     local builtin = require('telescope.builtin')
     vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
@@ -376,19 +331,19 @@ lua << EOF
     })
 
     -- config oil
-    -- require("oil").setup()
+    require("oil").setup()
 
-    -- config neoscroll
-    -- require('neoscroll').setup()
+    -- config boole
+    require('boole').setup({
+      mappings = {
+        increment = '<C-a>',
+        decrement = '<C-x>'
+      }
+    })
 
-    -- config colorscheme
-    -- require("catppuccin").setup({
-    --     transparent_background = true,
-    --     no_italic = true
-    -- })
-    
-    -- config lsp_signature
-    -- require("lsp_signature").setup()
+    -- config Comment
+    require('Comment').setup()
+
     require("cyberdream").setup({
         transparent = true,
         italic_comments = false,
@@ -537,7 +492,7 @@ nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 nnoremap Y y$
 
-nnoremap <leader><space> :nohlsearch<CR>
+"nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <leader>pv :Ex<CR>
 
 "split navigations
@@ -552,6 +507,7 @@ nnoremap <leader>d :bd<CR>
 
 nnoremap [b :bp<cr>
 nnoremap ]b :bn<cr>
+" nnoremap <leader><leader> :b^<cr>
 
 "noremap <silent> k gk
 "noremap <silent> j gj
