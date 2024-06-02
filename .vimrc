@@ -1,16 +1,16 @@
 call plug#begin('~/.vim/plugged')
 
 "shared plugins
-Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'unblevable/quick-scope'
-" Plug 'michaeljsmith/vim-indent-object'
 " Plug 'airblade/vim-gitgutter'
 Plug 'romainl/vim-cool'
 Plug 'psliwka/vim-smoothie'
 
 if !has('nvim')
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'tpope/vim-commentary'
 Plug 'Houl/repmo-vim'
 Plug 'justinmk/vim-sneak'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -20,6 +20,7 @@ endif
 
 if has('nvim')
 Plug 'ggandor/leap.nvim'
+"Plug 'ggandor/flit.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
@@ -29,18 +30,23 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 Plug 'mfussenegger/nvim-lint'
 Plug 'bekaboo/deadcolumn.nvim'
 Plug 'RRethy/vim-illuminate'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'windwp/nvim-ts-autotag'
-" Plug 'folke/trouble.nvim'
-" Plug 'stevearc/oil.nvim'
+"Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+Plug 'stevearc/oil.nvim'
+"Plug 'stevearc/aerial.nvim'
+"Plug 'otavioschwanck/arrow.nvim'
+"Plug 'simonmclean/triptych.nvim'
+Plug 'numToStr/Comment.nvim'
 "Plug 'ray-x/lsp_signature.nvim'
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-" Plug 'nvim-telescope/telescope-file-browser.nvim'
-" Plug 'karb94/neoscroll.nvim'
+Plug 'nat-418/boole.nvim'
 
+"colorschemes
 Plug 'olimorris/onedarkpro.nvim'
 Plug 'zootedb0t/citruszest.nvim'
 Plug 'scottmckendry/cyberdream.nvim'
@@ -48,7 +54,6 @@ Plug 'Everblush/nvim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 endif
 
-"colorschemes
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
 Plug 'bignimbus/pop-punk.vim'
