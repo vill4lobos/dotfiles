@@ -60,11 +60,13 @@ call plug#end()
 filetype plugin indent on
 set termguicolors "enable full palette of colors
 syntax on "syntax processing, colors
-colorscheme onedark
 
+if !has('nvim')
+    colorscheme onedark
+endif
 
 " set syntax as custom pt for new buffers without syntax
-"au BufNewFile * if &syntax == '' | set syntax=pt | endif
+au BufNewFile * if &syntax == '' | set syntax=pt | endif
 
 " configs for nvim plugins
 if has('nvim')
@@ -290,7 +292,7 @@ lua << EOF
     vim.keymap.set('n', '<leader>d', builtin.diagnostics, {})
     vim.keymap.set('n', '<leader>gr', builtin.live_grep, {})
     vim.keymap.set('n', '<leader>bb', builtin.buffers, {})
-    vim.keymap.set('n', '<leader>s', builtin.lsp_document_symbols, {})
+    vim.keymap.set('n', '<leader>s', "<cmd>lua require('telescope.builtin').lsp_document_symbols({symbols = {'function', 'class', 'method'}})<CR>", {})
     vim.keymap.set('n', '<leader>r', builtin.lsp_references, {})
 
     -- config gitsigns
