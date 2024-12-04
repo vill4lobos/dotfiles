@@ -4,7 +4,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'unblevable/quick-scope'
-" Plug 'airblade/vim-gitgutter'
 Plug 'romainl/vim-cool'
 Plug 'psliwka/vim-smoothie'
 
@@ -15,36 +14,48 @@ Plug 'Houl/repmo-vim'
 Plug 'justinmk/vim-sneak'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'preservim/tagbar'
 endif
 
 if has('nvim')
-Plug 'ggandor/leap.nvim'
-"Plug 'ggandor/flit.nvim'
+" lsp, treesitter, cmp, languages
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+
+" cmp, linter
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+Plug 'hrsh7th/vim-vsnip'
 Plug 'mfussenegger/nvim-lint'
+
+" mini
+Plug 'echasnovski/mini.files'
+Plug 'echasnovski/mini.starter'
+Plug 'echasnovski/mini.sessions'
+Plug 'echasnovski/mini.pick'
+Plug 'echasnovski/mini.extra'
+
+" navigation
+Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
+Plug 'lewis6991/gitsigns.nvim'
+Plug 'ggandor/leap.nvim'
+" Plug 'otavioschwanck/arrow.nvim'
+" Plug 'j-morano/buffer_manager.nvim'
+Plug 'toppair/reach.nvim'
+
+" utils, misc
+Plug 'nvim-tree/nvim-web-devicons'
 Plug 'bekaboo/deadcolumn.nvim'
 Plug 'RRethy/vim-illuminate'
-Plug 'lewis6991/gitsigns.nvim'
-Plug 'windwp/nvim-ts-autotag'
-"Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-Plug 'stevearc/oil.nvim'
-"Plug 'stevearc/aerial.nvim'
-"Plug 'otavioschwanck/arrow.nvim'
-"Plug 'simonmclean/triptych.nvim'
 Plug 'numToStr/Comment.nvim'
-"Plug 'ray-x/lsp_signature.nvim'
-Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nat-418/boole.nvim'
+Plug 'mistricky/codesnap.nvim', { 'do': 'make' }
+"Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+"Plug 'ray-x/lsp_signature.nvim'
+Plug 'folke/trouble.nvim'
 
 "colorschemes
 Plug 'olimorris/onedarkpro.nvim'
@@ -59,7 +70,6 @@ Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
 Plug 'bignimbus/pop-punk.vim'
 " Plug 'catppuccin/vim', { 'as': 'catppuccin_vim' }
 Plug 'joshdick/onedark.vim'
-
 call plug#end()
 
 filetype plugin indent on
