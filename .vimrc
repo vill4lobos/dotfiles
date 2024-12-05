@@ -88,8 +88,8 @@ if has('nvim')
 lua << EOF
     -- config treesitter
     require "nvim-treesitter.configs".setup {
-        ensure_installed = { "c", "lua", "vim" , "python", "javascript",
-                            "bash", "markdown", "tsx", "json", "html", "css" },
+        ensure_installed = { "c", "lua", "vim" , "python", "javascript", "bash",
+                             "markdown", "tsx", "json", "html", "css", "rust", "go"},
         sync_install = true,
         auto_install = true,
         event = { "BufReadPre", "BufNewFile" },
@@ -200,7 +200,9 @@ lua << EOF
     end
 
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    local servers = { 'pyright', 'tsserver', 'html', 'cssls', 'emmet_language_server' }
+    local servers = { 'pyright', 'ts_ls', 'html', 'cssls',
+                      'emmet_language_server', 'rust_analyzer', 'ccls' }
+
     for _, lsp in ipairs(servers) do
       require('lspconfig')[lsp].setup {
         capabilities = capabilities
