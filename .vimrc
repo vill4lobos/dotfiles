@@ -538,10 +538,13 @@ nnoremap <C-H> <C-W><C-H>
 
 nnoremap gb <C-^>
 " nnoremap <leader>b :bn<CR>
-nnoremap <leader>d :bd<CR>
+" nnoremap <leader>d :bd<CR>
 
 nnoremap [b :bp<cr>
 nnoremap ]b :bn<cr>
+nnoremap <Tab> <C-^>
+nnoremap <S-Tab> :bp<cr>
+nnoremap <C-Tab> :bn<cr>
 " nnoremap <leader><leader> :b^<cr>
 
 "noremap <silent> k gk
