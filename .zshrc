@@ -94,12 +94,22 @@ git_status() {
 PROMPT='%(?.%F{5}.%F{1})%n%f %F{4}$%f '
 RPROMPT='$(git_status)%F{3}%0~%f %F{5}%T%f'
 
-#autoload -Uz add-zsh-hook; add-zsh-hook chpwd python_venv
+# autoload -Uz add-zsh-hook; add-zsh-hook chpwd python_venv
 autoload -Uz compinit; compinit
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # plugins
 source /usr/share/zsh-z/zsh-z.plugin.zsh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source /usr/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+# source /usr/share/fzf-tab/fzf-tab.plugin.zsh
 
-bindkey -v '^ ' autosuggest-accept
+# bindkey -v '^ ' autosuggest-accept
+
+export PATH=$HOME/.local/bin:$HOME/.cargo/bin:$PATH
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
