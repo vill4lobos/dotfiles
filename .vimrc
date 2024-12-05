@@ -360,11 +360,29 @@ lua << EOF
         italic_comments = false,
         hide_fillchars = true,
         borderless_telescope = false,
-        terminal_colors = true
+        terminal_colors = true,
+        -- extensions = {
+        --     fzflua = true,
+        -- },
+    })
+
+    vim.keymap.set('n', '<leader><leader>', '<cmd>ReachOpen buffers<CR>', {})
+    vim.keymap.set('n', '<leader>hh', '<cmd>Gitsigns setloclist<CR>', {})
+    vim.keymap.set('n', '<leader>m', '<cmd>Pick marks<CR>', {})
+    vim.keymap.set('n', '<leader><Tab>', '<cmd>Pick buffers<CR>', {})
+    vim.keymap.set('n', '<leader>b', '<cmd>Pick buffers<CR>', {})
+    vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', {})
+    vim.keymap.set('n', '<leader>f', "<cmd>Pick files<CR>", {})
+
+    require('trouble').setup({
+        focus = true
     })
 
     vim.cmd("colorscheme cyberdream")
 
+    require('reach').setup({
+      notifications = true
+    })
 
     vim.api.nvim_set_hl(0, "Normal", {guibg=NONE, ctermbg=NONE})
 EOF
