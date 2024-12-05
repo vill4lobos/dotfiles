@@ -319,8 +319,30 @@ lua << EOF
       end
     })
 
-    -- config oil
-    require("oil").setup()
+    -- config mini
+    require("mini.files").setup({
+            options = {
+                permanent_delete = true,
+                use_as_default_explorer = true,
+            },
+    })
+    -- vim.keymap.set('n', '<leader>f', "<cmd>lua MiniFiles.open()<CR>", {})
+
+    local starter = require('mini.starter')
+    require("mini.starter").setup({
+        query_updaters = 'abcdefgimnopqrstuvwxyz0123456789_-.',
+        evaluate_single = true,
+        items = {
+          starter.sections.builtin_actions(),
+          starter.sections.recent_files(7, false),
+          starter.sections.recent_files(3, true),
+          starter.sections.sessions(3, true)
+        }
+    })
+
+    require("mini.sessions").setup()
+    require('mini.pick').setup()
+    require('mini.extra').setup()
 
     -- config boole
     require('boole').setup({
