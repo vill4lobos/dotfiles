@@ -12,22 +12,32 @@ SAVEHIST=100000
 
 setopt HIST_SAVE_NO_DUPS
 
-export ZSH_AUTOSUGGEST_MANUAL_REBIND=
+# export ZSH_AUTOSUGGEST_MANUAL_REBIND=
 export VIRTUAL_ENV_DISABLE_PROMPT=
 setopt PROMPT_SUBST
+setopt MENU_COMPLETE
+setopt AUTO_PARAM_SLASH
 
 setopt autocd extendedglob nomatch
 unsetopt beep notify
-# bindkey -e
+bindkey -e
+bindkey '^[[Z' reverse-menu-complete
+zmodload zsh/complist
+bindkey -M menuselect '^M' .accept-line
+# bindkey -M menuselect '^i' .expand-or-complete-prefix
+
+autoload -U select-word-style
+select-word-style bash
+# bindkey -M menuselect '^X' accept-and-infer-next-history
 
 # set vim keybindings
-bindkey -v
-export KEYTIMEOUT=1
+# bindkey -v
+# export KEYTIMEOUT=1
 
-bindkey '^P' up-history
-bindkey '^N' down-history
-bindkey '^A' beginning-of-line
-bindkey '^E' end-of-line
+# bindkey '^P' up-history
+# bindkey '^N' down-history
+# bindkey '^A' beginning-of-line
+# bindkey '^E' end-of-line
 
 # aliases
 alias ls='ls --color=auto'
@@ -36,9 +46,11 @@ alias vim='nvim'
 alias oldvim='\vim'
 alias venv='source ./venv/bin/activate'
 alias .git='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias fd='fdfind'
 
 zstyle :compinstall filename '$HOME/.zshrc'
-zstyle ':completion:*' menu select
+zstyle ':completion:*' menu yes select
+# zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 _comp_options+=(globdots)
 
 # function to auto activate or deactivate a virtual environment
