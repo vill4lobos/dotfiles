@@ -447,7 +447,12 @@ endfunction
 function! GitBranch() abort
   let l:is_branch = system("git rev-parse --abbrev-ref HEAD")
   if l:is_branch !~ 'fatal'
-    return trim(l:is_branch)
+    let l:is_dirty = system("git diff-index --quiet HEAD 2> /dev/null")
+    if v:shell_error != 0
+      return ' %#Error#'..trim(l:is_branch)..'%*'
+    else
+      return ' %#Comment#'..trim(l:is_branch)..'%*'
+    endif
   else
     return ''
   endif
@@ -457,7 +462,7 @@ endfunction
 function! StatuslineActive()
     let w:mode = '%#Type#%{StatusMode()}%*'
     let l:buffer = ' %n |'
-    let l:branch = " %#Comment#%{GitBranch()}%*"
+    let l:branch = GitBranch()
     let l:filename = ' %#Function#%f%*'
     let l:modified = ' %#Error#%M%*'
     return w:mode.l:buffer.l:branch.l:filename.l:modified
