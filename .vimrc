@@ -271,46 +271,16 @@ lua << EOF
     -- config leap
     require('leap').create_default_mappings()
 
-    -- config telescope
-    -- local fb_actions = require "telescope._extensions.file_browser.actions"
-
-    require('telescope').setup{
-      defaults = {
-        layout_strategy = 'vertical',
-        wrap_results = true,
-        layout_config = {
-          prompt_position = 'bottom',
-        },
-      },
-      pickers = {
-        diagnostics = {
-          theme = 'ivy',
-          initial_mode = 'normal',
-        },
-        -- buffers = {
-        --   theme = 'cursor',
-        -- },
-      },
-      extensions = {
-        fzf = {
-          fuzzy = true,
-          override_generic_sorter = true,
-          override_file_sorter = true,
-          case_mode = "smart_case",
-        },
-      }
-    }
-    require("telescope").load_extension('fzf')
-
-    local builtin = require('telescope.builtin')
-    vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-    vim.keymap.set('n', '<leader>fo', builtin.oldfiles, {})
-    vim.keymap.set('n', '<leader>fh', "<cmd>lua require('telescope.builtin').find_files({search_dirs={'~'}})<cr>", {})
-    vim.keymap.set('n', '<leader>d', builtin.diagnostics, {})
-    vim.keymap.set('n', '<leader>gr', builtin.live_grep, {})
-    vim.keymap.set('n', '<leader>bb', builtin.buffers, {})
-    vim.keymap.set('n', '<leader>s', "<cmd>lua require('telescope.builtin').lsp_document_symbols({symbols = {'function', 'class', 'method'}})<CR>", {})
-    vim.keymap.set('n', '<leader>r', builtin.lsp_references, {})
+    -- config fzf-lua
+    require('fzf-lua').setup({
+      'fzf-native'
+    })
+    
+    local fzf = require('fzf-lua')
+    -- open files
+    vim.keymap.set('n', '<leader>r', fzf.lsp_references, {})
+    vim.keymap.set('n', '<leader>g', fzf.live_grep, {})
+    vim.keymap.set('n', '<leader>s', fzf.lsp_document_symbols, {})
 
     -- config gitsigns
     require('gitsigns').setup({
@@ -428,6 +398,7 @@ function! StatusMode() abort
          \ 'R'  : 'rplace',
          \ 'Rv' : 'vi-rpl',
          \ 'c'  : 'cmmand',
+         \ 't'  : 'fzflua',
          \}
 
   return l:modes[mode()]
