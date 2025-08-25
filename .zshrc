@@ -102,14 +102,25 @@ RPROMPT='$(git_status)%F{3}%0~%f %F{5}%T%f'
 # autoload -Uz add-zsh-hook; add-zsh-hook chpwd python_venv
 autoload -Uz compinit; compinit
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# plugins: download or source
+zsh_plugins=(
+    "agkozak/zsh-z zsh-z.plugin.zsh"
+    "zsh-users/zsh-syntax-highlighting zsh-syntax-highlighting.zsh"
+    "zsh-users/zsh-autosuggestions zsh-autosuggestions.zsh"
+#   zsh-autocomplete
+#   fzf-tab
+)
 
-# plugins
-source /usr/share/zsh-z/zsh-z.plugin.zsh
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-# source /usr/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-# source /usr/share/fzf-tab/fzf-tab.plugin.zsh
+for plugin in ${zsh_plugins[@]}; do
+    plugin_name=${${plugin%% *}#*/}
+    plugin_dir=$HOME/.zsh/$plugin_name
+
+    if ! [ -d $HOME/.zsh/$plugin_name ]; then
+        git clone github.com/${plugin%% *} $plugin_dir
+    else
+        source $HOME/.zsh/$plugin_name/${plugin#* }
+    fi
+done
 
 # bindkey -v '^ ' autosuggest-accept
 
