@@ -428,13 +428,24 @@ lua << EOF
     require('trouble').setup({
         focus = true
     })
+    
+    -- ghost setup
+    vim.g.nvim_ghost_autostart = 0
 
     vim.cmd("colorscheme cyberdream")
 
-    require('reach').setup({
-      notifications = true
-    })
+    -- require('reach').setup({
+    --   notifications = true
+    -- })
 
+    -- require('leetcode').setup({
+    --     arg = 'leet',
+    --     lang = 'python3',
+    --     plugins = {
+    --         non_standalone = true
+    --     },
+    -- })
+    --
     vim.api.nvim_set_hl(0, "Normal", {guibg=NONE, ctermbg=NONE})
 EOF
 endif
@@ -456,7 +467,10 @@ set shiftwidth=4
 set expandtab		"tabs = spaces
 set autoindent
 
-"set cursorline		"line the cursor are on goes highlighted
+set cursorline		"line the cursor are on goes highlighted
+set cursorlineopt=number        "change only current line number
+hi! link CursorLineNr Number    "set number highlight group
+
 set wildmenu 		"when tab to complete, appears a zsh-like menu
 set wildmode=full:lastused
 " set wildmode=list:longest,full
