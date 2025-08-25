@@ -81,7 +81,7 @@ if !has('nvim')
 endif
 
 " set syntax as custom pt for new buffers without syntax
-au BufNewFile * if &syntax == '' | set syntax=pt | endif
+au BufNewFile,BufReadPost * if &syntax == '' | set syntax=pt | endif
 
 " configs for nvim plugins
 if has('nvim')
