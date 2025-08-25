@@ -284,9 +284,42 @@ lua << EOF
        underline = false,
      }
 
-    -- config leap
-    require('leap').create_default_mappings()
+    -- -- config leap
+    -- require('leap').create_default_mappings()
 
+    -- config flash
+    require('flash').setup({
+        modes = {
+            char = {
+                jump_labels = true,
+                multi_line = false
+            },
+            -- search = {
+            --     enabled = true
+            -- }
+        },
+        jump = {
+            autojump = true
+        },
+        label = {
+            rainbow = {
+                enabled = true
+            }
+        }
+
+    })
+    vim.keymap.set({'n', 'x', 'o'}, 's', function() require("flash").jump() end)
+    vim.keymap.set({'n', 'x', 'o'}, 'S', function() require("flash").treesitter() end)
+
+    require('snacks').setup({
+        scroll = { enabled = true },
+        -- indent = { enabled = true },
+        scratch = { enabled = true },
+        -- dim = { enabled = true },
+        -- explorer = { enabled = true },
+        -- picker = { enabled = true },
+    })
+    
     -- config fzf-lua
     require('fzf-lua').setup({
       'fzf-native'
@@ -359,6 +392,7 @@ lua << EOF
     require("mini.sessions").setup()
     require('mini.pick').setup()
     require('mini.extra').setup()
+    require('mini.pairs').setup()
 
     -- config boole
     require('boole').setup({
@@ -373,16 +407,17 @@ lua << EOF
 
     require("cyberdream").setup({
         transparent = true,
+        saturation = 1,
         italic_comments = false,
-        hide_fillchars = true,
-        borderless_telescope = false,
+        hide_fillchars = false,
+        borderless_picker = true,
         terminal_colors = true,
         -- extensions = {
         --     fzflua = true,
         -- },
     })
 
-    vim.keymap.set('n', '<leader><leader>', '<cmd>ReachOpen buffers<CR>', {})
+    -- vim.keymap.set('n', '<leader><leader>', '<cmd>ReachOpen buffers<CR>', {})
     vim.keymap.set('n', '<leader>hh', '<cmd>Gitsigns setloclist<CR>', {})
     vim.keymap.set('n', '<leader>m', '<cmd>Pick marks<CR>', {})
     vim.keymap.set('n', '<leader><Tab>', '<cmd>Pick buffers<CR>', {})
