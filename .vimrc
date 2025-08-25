@@ -5,7 +5,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'unblevable/quick-scope'
 Plug 'romainl/vim-cool'
-Plug 'psliwka/vim-smoothie'
 
 if !has('nvim')
 Plug 'michaeljsmith/vim-indent-object'
@@ -14,6 +13,7 @@ Plug 'Houl/repmo-vim'
 Plug 'justinmk/vim-sneak'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'psliwka/vim-smoothie'
 endif
 
 if has('nvim')
@@ -37,6 +37,8 @@ Plug 'echasnovski/mini.starter'
 Plug 'echasnovski/mini.sessions'
 Plug 'echasnovski/mini.pick'
 Plug 'echasnovski/mini.extra'
+Plug 'echasnovski/mini.ai'
+Plug 'echasnovski/mini.pairs'
 
 " navigation
 Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
@@ -44,7 +46,12 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'ggandor/leap.nvim'
 " Plug 'otavioschwanck/arrow.nvim'
 " Plug 'j-morano/buffer_manager.nvim'
-Plug 'toppair/reach.nvim'
+" Plug 'toppair/reach.nvim'
+
+" folke
+Plug 'folke/flash.nvim'
+Plug 'folke/snacks.nvim'
+Plug 'folke/trouble.nvim'
 
 " utils, misc
 Plug 'nvim-tree/nvim-web-devicons'
@@ -52,12 +59,15 @@ Plug 'bekaboo/deadcolumn.nvim'
 Plug 'RRethy/vim-illuminate'
 Plug 'numToStr/Comment.nvim'
 Plug 'nat-418/boole.nvim'
-Plug 'mistricky/codesnap.nvim', { 'do': 'make' }
+" Plug 'mistricky/codesnap.nvim', { 'do': 'make' }
 "Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 "Plug 'ray-x/lsp_signature.nvim'
-Plug 'folke/trouble.nvim'
+" Plug 'kawre/leetcode.nvim'
+" Plug 'MunifTanjim/nui.nvim'
+Plug 'subnut/nvim-ghost.nvim'
 
 "colorschemes
+"aura, carbonfox
 Plug 'olimorris/onedarkpro.nvim'
 Plug 'zootedb0t/citruszest.nvim'
 Plug 'scottmckendry/cyberdream.nvim'
