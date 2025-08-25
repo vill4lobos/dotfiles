@@ -18,17 +18,18 @@ setopt PROMPT_SUBST
 setopt MENU_COMPLETE
 setopt AUTO_PARAM_SLASH
 
-setopt autocd extendedglob nomatch
+setopt autocd extendedglob nomatch appendhistory SHARE_HISTORY
 unsetopt beep notify
 bindkey -e
 bindkey '^[[Z' reverse-menu-complete
 zmodload zsh/complist
 bindkey -M menuselect '^M' .accept-line
-# bindkey -M menuselect '^i' .expand-or-complete-prefix
+# bindkey -M menuselect '^X' .expand-or-complete-prefix
+bindkey -M menuselect '^I' list-choices
 
 autoload -U select-word-style
 select-word-style bash
-# bindkey -M menuselect '^X' accept-and-infer-next-history
+# bindkey -M menuselect '^X\t' accept-and-infer-next-history
 
 # set vim keybindings
 # bindkey -v
