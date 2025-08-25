@@ -41,13 +41,17 @@ select-word-style bash
 # bindkey '^E' end-of-line
 
 # aliases
-alias ls='ls --color=auto'
+# alias ls='ls --color=auto'
 alias grep='grep --color=auto'
-alias vim='nvim'
-alias oldvim='\vim'
+alias nv='nvim'
+alias vim='\vim'
 alias venv='source ./venv/bin/activate'
 alias .git='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias fd='fdfind'
+alias bat='batcat'
+alias ls='eza'
+alias ..='cd ..'
+alias ...='cd ../../'
 
 zstyle :compinstall filename '$HOME/.zshrc'
 zstyle ':completion:*' menu yes select
